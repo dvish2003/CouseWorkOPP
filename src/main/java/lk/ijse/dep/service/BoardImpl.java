@@ -48,6 +48,13 @@ public class BoardImpl implements Board {
         }*/
 
     }
+
+    @Override
+    public void updateMove(int col, int row, Piece move) {
+        pieces[col][row] = move;
+    }
+
+
     @Override
     public  Winner findWinner() {
         for (int i = 0; i < pieces.length; i++) {
