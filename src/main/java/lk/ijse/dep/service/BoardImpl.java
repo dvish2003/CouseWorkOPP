@@ -41,11 +41,7 @@ public class BoardImpl implements Board {
     public  void updateMove(int col,Piece move){
 
         pieces[col][findNextAvailableSpot(col)]=move;
-       /* for (int i = 0; i <pieces[col].length ; i++) {
-            if (pieces[col][i] == Piece.EMPTY) {
-                pieces[col][i]= move;
-            }
-        }*/
+
 
     }
 
@@ -57,31 +53,36 @@ public class BoardImpl implements Board {
 
     @Override
     public  Winner findWinner() {
+        // Check horizontally for four consecutive pieces
         for (int i = 0; i < pieces.length; i++) {
             for (int j = 0; j < pieces[i].length - 3; j++) {
+                // Check if the current cell is not empty and if four consecutive pieces are equal
                 if (pieces[i][j] != Piece.EMPTY && pieces[i][j] == pieces[i][j + 1] && pieces[i][j] == pieces[i][j + 2] && pieces[i][j] == pieces[i][j + 3]) {
+                    // If there's a winner, return a Winner object with the winning piece and its coordinates
                     return new Winner(pieces[i][j], i, j,i, j + 3);
                 }
 
             }
 
         }
-
+        // Check vertically for four consecutive pieces
         for (int i = 0; i < pieces.length-3; i++) {
             for (int j = 0; j <pieces[i].length; j++) {
+                // Check if the current cell is not empty and if four consecutive pieces are equal
                 if (pieces[i][j] != Piece.EMPTY && pieces[i][j] == pieces[i+1][j] && pieces[i][j] == pieces[i+2][j] && pieces[i][j] == pieces[i+3][j] ) {
+                    // If there's a winner, return a Winner object with the winning piece and its coordinates
                     return new Winner(pieces[i][j], i, j,i+3, j );
                 }
             }
         }
-
+        // If no winner is found, return a Winner object with an empty piece (indicating no winner)
         return new Winner(Piece.EMPTY);
     }
     public BoardImpl(BoardUI boardUI) {
         this.boardUI = boardUI;
         pieces =new Piece [NUM_OF_COLS] [NUM_OF_ROWS];
 
-        for (int i=0; i< pieces.length;i++) {
+        for (int i=0; i< pieces.length;i++) {    // Initialize the board with EMPTY pieces
             for (int j=0; j< pieces[i].length;j++){
                 pieces[i][j]=Piece.EMPTY;
             }
